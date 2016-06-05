@@ -1,5 +1,7 @@
 package com.preparation.datastructures;
 
+import sun.misc.Queue;
+
 /**
  * Describes a mTree which is nothing but collection of nodes having a parent-child relation
  * 1. Top Node is <b>root</b>
@@ -19,7 +21,7 @@ package com.preparation.datastructures;
 public class BSTDemo {
   public static Tree mTree;
 
-  public static void main(String a[]) {
+  public static void main(String a[]) throws InterruptedException {
     insert(23);
     insert(14);
     insert(31);
@@ -27,14 +29,21 @@ public class BSTDemo {
     insert(9);
     insert(17);
     insert(15);
+    insert(25);
+    insert(35);
+    insert(24);
+    insert(26);
+    insert(34);
+    insert(36);
 
-    mTree = delete(mTree, 23);
+    //mTree = delete(mTree, 31);
 
     //System.out.println(contains(mTree, 23));
 
-    preOrder(mTree);
+    //preOrder(mTree);
     //inOrder(mTree);
     //postOrder(mTree);
+    breadthFirstTraversal(mTree);
   }
 
   /******************************************************************************/
@@ -116,11 +125,12 @@ public class BSTDemo {
     postOrder(root.right);
     System.out.println(root.value);
   }
+
+  /******************************************************************************/
+  // Delete a Node
+
+  /******************************************************************************/
   /*
-      ====================23=============================   	depth = 0, height =3
-      =========14=========================31============== 		depth = 1, height =2
-      =====7========17================25======35==========   	depth = 2, height =1
-      =======9===15=======================================   	depth = 3, height =0
   case 1: Node to be deleted is a leaf(i.e, node has not children)
   case 2: Node to be deleted has one child and it is a left sub child
   case 3: Node to be deleted has one child and it is a right sub child
@@ -131,10 +141,6 @@ public class BSTDemo {
   4. f( max(node) of left sub tree in temp - 6 / 10
   5. Replace node to be deleted with max(node) of left sub tree - 6 / 10
    */
-  /******************************************************************************/
-  // Delete a Node
-
-  /******************************************************************************/
   private static Tree delete(Tree root, int value) {
     Tree nodeToDelete = findNode(root, value);
     if (nodeToDelete == null) return root;
@@ -164,9 +170,17 @@ public class BSTDemo {
         parent.right = nodeToDelete.right;
       }
     } else {//case 4
-      Tree maxValue = maxValueOfLeftSubTree(nodeToDelete);
-      nodeToDelete.value = maxValue.value;
-      root.left = delete(root.left, maxValue.value);
+      //Any one logic can be used either maxValueOfLeftSubTree or minValueOfRightSubTree
+
+      //maxValueOfLeftSubTree
+      //Tree maxValue = maxValueOfLeftSubTree(nodeToDelete);
+      //nodeToDelete.value = maxValue.value;
+      //nodeToDelete.left = delete(nodeToDelete.left, maxValue.value);
+
+      //minValueOfRightSubTree
+      Tree minValue = minValueOfRightSubTree(nodeToDelete);
+      nodeToDelete.value = minValue.value;
+      nodeToDelete.right = delete(nodeToDelete.right, minValue.value);
     }
 
     return root;
@@ -215,7 +229,7 @@ public class BSTDemo {
   }
 
   /******************************************************************************/
-  // Find a Parent Node
+  // Find Maximum Value Of Left Sub Tree
 
   /******************************************************************************/
   private static Tree maxValueOfLeftSubTree(Tree value) {//23,1 (7,1)
@@ -225,5 +239,45 @@ public class BSTDemo {
     }
 
     return value;
+  }
+
+  /******************************************************************************/
+  // Find Minimum Value Of Right Sub Tree
+
+  /******************************************************************************/
+  private static Tree minValueOfRightSubTree(Tree value) {//23,1 (7,1)
+    value = value.right;
+    while (value.left != null) {
+      value = value.left;
+    }
+
+    return value;
+  }
+
+  /******************************************************************************/
+  // Breadth First Traversal
+
+  /******************************************************************************/
+  private static void breadthFirstTraversal(Tree tree) throws InterruptedException {
+
+    Queue queue = new Queue();
+    if (tree == null) {
+      return;
+    }
+
+    while (tree != null) {
+      System.out.println(tree.value);
+      if (tree.left != null) {
+        queue.enqueue(tree.left);
+      }
+      if (tree.right != null) {
+        queue.enqueue(tree.right);
+      }
+      if (!queue.isEmpty()) {
+        tree.left = (Tree) queue.dequeue();
+      } else {
+        tree = null;
+      }
+    }
   }
 }
