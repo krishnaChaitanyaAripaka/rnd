@@ -274,7 +274,7 @@ public class BSTDemo {
         queue.enqueue(tree.right);
       }
       if (!queue.isEmpty()) {
-        tree.left = (Tree) queue.dequeue();
+        tree = (Tree) queue.dequeue();
       } else {
         tree = null;
       }
