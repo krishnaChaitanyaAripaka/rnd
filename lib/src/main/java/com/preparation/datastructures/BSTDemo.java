@@ -1,7 +1,5 @@
 package com.preparation.datastructures;
 
-import sun.misc.Queue;
-
 /**
  * Describes a mTree which is nothing but collection of nodes having a parent-child relation
  * 1. Top Node is <b>root</b>
@@ -19,265 +17,31 @@ import sun.misc.Queue;
  * @since 04/06/16
  */
 public class BSTDemo {
-  public static Tree mTree;
+
 
   public static void main(String a[]) throws InterruptedException {
-    insert(23);
-    insert(14);
-    insert(31);
-    insert(7);
-    insert(9);
-    insert(17);
-    insert(15);
-    insert(25);
-    insert(35);
-    insert(24);
-    insert(26);
-    insert(34);
-    insert(36);
+    BinarySearchTree<Integer> bst = new BinarySearchTree<>();
 
-    //mTree = delete(mTree, 31);
+    bst.insert(23);
+    bst.insert(14);
+    bst.insert(31);
+    bst.insert(7);
+    bst.insert(9);
+    bst.insert(17);
+    bst.insert(15);
+    bst.insert(25);
+    bst.insert(35);
+    bst.insert(24);
+    bst.insert(26);
+    bst.insert(34);
+    bst.insert(36);
+    bst.delete(31);
+    bst.breadthFirstTraversal();
 
-    //System.out.println(contains(mTree, 23));
+    System.out.println(bst.contains(23));
+    BinarySearchTree<String> b = new BinarySearchTree<>();
+    b.insert("Hi");
+    b.insert("Hello");
 
-    //preOrder(mTree);
-    //inOrder(mTree);
-    //postOrder(mTree);
-    breadthFirstTraversal(mTree);
-  }
-
-  /******************************************************************************/
-  // Insert a Node
-
-  /******************************************************************************/
-  private static void insert(int value) {
-    if (null == mTree) {
-      Tree temp = new Tree();
-      temp.value = value;
-      mTree = temp;
-    } else {
-      insertNode(mTree, value);
-    }
-  }
-
-  private static void insertNode(Tree root, int value) {
-    if (value < root.value) {
-      if (null == root.left) {
-        Tree temp = new Tree();
-        temp.value = value;
-        root.left = temp;
-      } else {
-        insertNode(root.left, value);
-      }
-    } else {
-      if (null == root.right) {
-        Tree temp = new Tree();
-        temp.value = value;
-        root.right = temp;
-      } else {
-        insertNode(root.right, value);
-      }
-    }
-  }
-
-  /******************************************************************************/
-  // Contains
-
-  /******************************************************************************/
-  private static boolean contains(Tree root, int value) {
-    if (root == null) {
-      return false;
-    } else if (value == root.value) {
-      return true;
-    } else {
-      if (value < root.value) {
-        return contains(root.left, value);
-      } else {
-        return contains(root.right, value);
-      }
-    }
-  }
-
-  /******************************************************************************/
-  // Depth First Traversal
-
-  /******************************************************************************/
-  private static void preOrder(Tree root) {
-    if (root == null) return;
-
-    System.out.println(root.value);
-    preOrder(root.left);
-    preOrder(root.right);
-  }
-
-  private static void inOrder(Tree root) {
-    if (root == null) return;
-
-    inOrder(root.left);
-    System.out.println(root.value);
-    inOrder(root.right);
-  }
-
-  private static void postOrder(Tree root) {
-    if (root == null) return;
-
-    postOrder(root.left);
-    postOrder(root.right);
-    System.out.println(root.value);
-  }
-
-  /******************************************************************************/
-  // Delete a Node
-
-  /******************************************************************************/
-  /*
-  case 1: Node to be deleted is a leaf(i.e, node has not children)
-  case 2: Node to be deleted has one child and it is a left sub child
-  case 3: Node to be deleted has one child and it is a right sub child
-  case 4: Node to be deleted has two children
-  1. Find node to delete - 7
-  2. Find max(node) of left sub tree from node to delete / min(node) of right sub tree from node to delete - 6 / 10
-  3. Find parent node of the node to be deleted - 5
-  4. f( max(node) of left sub tree in temp - 6 / 10
-  5. Replace node to be deleted with max(node) of left sub tree - 6 / 10
-   */
-  private static Tree delete(Tree root, int value) {
-    Tree nodeToDelete = findNode(root, value);
-    if (nodeToDelete == null) return root;
-
-    Tree parent = findParentNode(root, nodeToDelete);
-    if (parent == null && nodeToDelete.left == null && nodeToDelete.right == null) {
-      root = null;
-      return root;
-    }
-
-    if (nodeToDelete.left == null && nodeToDelete.right == null) {//case 1
-      if (nodeToDelete.value < parent.value) {
-        parent.left = null;
-      } else {
-        parent.right = null;
-      }
-    } else if (nodeToDelete.right == null) {//case 2
-      if (nodeToDelete.value < parent.value) {
-        parent.left = nodeToDelete.left;
-      } else {
-        parent.right = nodeToDelete.left;
-      }
-    } else if (nodeToDelete.left == null) {//case 3
-      if (nodeToDelete.value < parent.value) {
-        parent.left = nodeToDelete.right;
-      } else {
-        parent.right = nodeToDelete.right;
-      }
-    } else {//case 4
-      //Any one logic can be used either maxValueOfLeftSubTree or minValueOfRightSubTree
-
-      //maxValueOfLeftSubTree
-      //Tree maxValue = maxValueOfLeftSubTree(nodeToDelete);
-      //nodeToDelete.value = maxValue.value;
-      //nodeToDelete.left = delete(nodeToDelete.left, maxValue.value);
-
-      //minValueOfRightSubTree
-      Tree minValue = minValueOfRightSubTree(nodeToDelete);
-      nodeToDelete.value = minValue.value;
-      nodeToDelete.right = delete(nodeToDelete.right, minValue.value);
-    }
-
-    return root;
-  }
-
-  /******************************************************************************/
-  // Find a Node
-
-  /******************************************************************************/
-  private static Tree findNode(Tree root, int value) {
-    if (root == null) {
-      return null;
-    } else if (value == root.value) {
-      return root;
-    } else {
-      if (value < root.value) {
-        return findNode(root.left, value);
-      } else {
-        return findNode(root.right, value);
-      }
-    }
-  }
-
-  /******************************************************************************/
-  // Find a Parent Node
-
-  /******************************************************************************/
-  private static Tree findParentNode(Tree root, Tree value) {//23,1 (7,1)
-    if (root == null) {
-      return null;
-    } else if (value.value == root.value) {
-      return null;
-    } else if (value.value < root.value) {
-      if (root.left.value == value.value) {
-        return root;
-      } else {
-        return findParentNode(root.left, value);
-      }
-    } else {
-      if (root.right.value == value.value) {
-        return root;
-      } else {
-        return findParentNode(root.right, value);
-      }
-    }
-  }
-
-  /******************************************************************************/
-  // Find Maximum Value Of Left Sub Tree
-
-  /******************************************************************************/
-  private static Tree maxValueOfLeftSubTree(Tree value) {//23,1 (7,1)
-    value = value.left;
-    while (value.right != null) {
-      value = value.right;
-    }
-
-    return value;
-  }
-
-  /******************************************************************************/
-  // Find Minimum Value Of Right Sub Tree
-
-  /******************************************************************************/
-  private static Tree minValueOfRightSubTree(Tree value) {//23,1 (7,1)
-    value = value.right;
-    while (value.left != null) {
-      value = value.left;
-    }
-
-    return value;
-  }
-
-  /******************************************************************************/
-  // Breadth First Traversal
-
-  /******************************************************************************/
-  private static void breadthFirstTraversal(Tree tree) throws InterruptedException {
-
-    Queue queue = new Queue();
-    if (tree == null) {
-      return;
-    }
-
-    while (tree != null) {
-      System.out.println(tree.value);
-      if (tree.left != null) {
-        queue.enqueue(tree.left);
-      }
-      if (tree.right != null) {
-        queue.enqueue(tree.right);
-      }
-      if (!queue.isEmpty()) {
-        tree = (Tree) queue.dequeue();
-      } else {
-        tree = null;
-      }
-    }
   }
 }
