@@ -14,7 +14,6 @@ public class Queue<E> {
   public class Node {
     private E n;
     private Node next;
-    private int priority;
 
     Node(E value) {
       n = value;
@@ -34,17 +33,14 @@ public class Queue<E> {
   }
 
   public E deQueue() {
-    if (mHead == mTail) {
-      clear();
-      return null;
-    }
+    if (mHead == null) return null;
 
     Node current = mHead;
-
-    if (mHead.next == null) {
-      mHead = null;
+    if (mHead == mTail) {
+      clear();
+    } else {
+      mHead = mHead.next;
     }
-    mHead = mHead.next;
 
     return current.n;
   }

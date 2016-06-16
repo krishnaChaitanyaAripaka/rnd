@@ -26,7 +26,7 @@ public class BinarySearchTree<E> {
     }
   }
 
-  private void insertNode(Tree root, E value) {
+  public void insertNode(Tree root, E value) {
     if (isLessThan(value, root.value)) {
       if (null == root.left) {
         Tree temp = new Tree();
@@ -64,7 +64,11 @@ public class BinarySearchTree<E> {
     }
   }
 
-  public void preOrder(Tree root) {
+  public void preOrder() {
+    preOrder(mTree);
+  }
+
+  private void preOrder(Tree root) {
     if (root == null) return;
 
     System.out.println(root.value);
@@ -72,7 +76,11 @@ public class BinarySearchTree<E> {
     preOrder(root.right);
   }
 
-  public void inOrder(Tree root) {
+  public void inOrder() {
+    inOrder(mTree);
+  }
+
+  private void inOrder(Tree root) {
     if (root == null) return;
 
     inOrder(root.left);
@@ -80,7 +88,11 @@ public class BinarySearchTree<E> {
     inOrder(root.right);
   }
 
-  public void postOrder(Tree root) {
+  public void postOrder() {
+    postOrder(mTree);
+  }
+
+  private void postOrder(Tree root) {
     if (root == null) return;
 
     postOrder(root.left);
@@ -238,4 +250,5 @@ public class BinarySearchTree<E> {
 
     throw new NoSuchElementException();
   }
+
 }
