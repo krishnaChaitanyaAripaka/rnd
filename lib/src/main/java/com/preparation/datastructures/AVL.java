@@ -3,29 +3,55 @@ package com.preparation.datastructures;
 /**
  * Created by chaitanya.ak on 14/06/16.
  */
-public class AVL<E> extends BinarySearchTree {
+public class AVL<E> extends BinarySearchTree<E> {
 
-  @Override public void insertNode(Tree root, Object value) {
-    super.insertNode(root, value);
-    //checkTreeBalance(root);
+  @Override public Tree insertNode(Tree tree, E value) {
+    if (isLessThan(value, tree.value)) {
+      if (null == tree.left) {
+        Tree temp = new Tree();
+        temp.value = value;
+        tree.left = temp;
+      } else {
+        tree.left = insertNode(tree.left, value);
+        tree = checkTreeBalance(tree);
+      }
+    } else {
+      if (null == tree.right) {
+        Tree temp = new Tree();
+        temp.value = value;
+        tree.right = temp;
+      } else {
+        tree.right = insertNode(tree.right, value);
+        tree = checkTreeBalance(tree);
+      }
+    }
+
+    return tree;
   }
 
-  public void rightRotation() {
-    if (mTree != null && mTree.left != null) {
-      Tree current = mTree.left;
-      mTree.left = current.right;
-      current.right = mTree;
-      mTree = current;
-    }
+  public Tree rotationWithLeftChild(Tree tree) {
+    Tree current = tree.left;
+    tree.left = current.right;
+    current.right = tree;
+
+    return current;
   }
 
-  public void leftRotation() {
-    if (mTree != null && mTree.right != null) {
-      Tree current = mTree.right;
-      mTree.right = current.left;
-      current.left = mTree;
-      mTree = current;
-    }
+  public Tree rotationWithRightChild(Tree tree) {
+    Tree current = tree.right;
+    tree.right = current.left;
+    current.left = tree;
+    return current;
+  }
+
+  public Tree doubleRotationWithRightChild(Tree tree) {
+    tree.right = rotationWithLeftChild(tree.right);
+    return rotationWithRightChild(tree);
+  }
+
+  public Tree doubleRotationWithLeftChild(Tree tree) {
+    tree.left = rotationWithRightChild(tree.left);
+    return rotationWithLeftChild(tree);
   }
 
   public int findHeight(Tree tree) {
@@ -34,25 +60,22 @@ public class AVL<E> extends BinarySearchTree {
     return Math.max(findHeight(tree.left), findHeight(tree.right)) + 1;
   }
 
-  public void checkTreeBalance(Tree tree) {
-
-    //if (tree == null) return;
-    tree = mTree;
+  public Tree checkTreeBalance(Tree tree) {
 
     if (findHeight(tree.left) - findHeight(tree.right) > 1) { //left is greater
       if (findHeight(tree.left.left) - findHeight(tree.left.right) > 0) {//left greater
-        rightRotation();
+        return rotationWithLeftChild(tree); //ll rotation
       } else {//right is greater
-        leftRotation();
-        rightRotation();
+        return doubleRotationWithLeftChild(tree);
       }
     } else if (findHeight(tree.left) - findHeight(tree.right) < -1) { //right greater
-      if (findHeight(tree.left.left) - findHeight(tree.left.right) < 0) {//right greater
-        leftRotation();
+      if (findHeight(tree.right.left) - findHeight(tree.right.right) < 0) {//right greater
+        return rotationWithRightChild(tree);
       } else {//left greater
-        rightRotation();
-        leftRotation();
+        return doubleRotationWithRightChild(tree);
       }
     }
+
+    return tree;
   }
 }
