@@ -22,28 +22,30 @@ public class BinarySearchTree<E> {
       temp.value = value;
       mTree = temp;
     } else {
-      insertNode(mTree, value);
+      mTree = insertNode(mTree, value);
     }
   }
 
-  public void insertNode(Tree root, E value) {
-    if (isLessThan(value, root.value)) {
-      if (null == root.left) {
+  public Tree insertNode(Tree tree, E value) {
+    if (isLessThan(value, tree.value)) {
+      if (null == tree.left) {
         Tree temp = new Tree();
         temp.value = value;
-        root.left = temp;
+        tree.left = temp;
       } else {
-        insertNode(root.left, value);
+        insertNode(tree.left, value);
       }
     } else {
-      if (null == root.right) {
+      if (null == tree.right) {
         Tree temp = new Tree();
         temp.value = value;
-        root.right = temp;
+        tree.right = temp;
       } else {
-        insertNode(root.right, value);
+        insertNode(tree.right, value);
       }
     }
+
+    return tree;
   }
 
   public boolean contains(E value) {
@@ -235,7 +237,7 @@ public class BinarySearchTree<E> {
     }
   }
 
-  private boolean isLessThan(E valueOne, E valueTwo) {
+  protected boolean isLessThan(E valueOne, E valueTwo) {
     if (valueOne instanceof Integer) {
       return (Integer) valueOne < (Integer) valueTwo;
     }
@@ -243,7 +245,7 @@ public class BinarySearchTree<E> {
     throw new NoSuchElementException();
   }
 
-  private boolean equals(E valueOne, E valueTwo) {
+  protected boolean equals(E valueOne, E valueTwo) {
     if (valueOne instanceof Integer) {
       return (Integer) valueOne == (Integer) valueTwo;
     }
