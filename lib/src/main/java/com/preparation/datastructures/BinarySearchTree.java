@@ -27,7 +27,7 @@ public class BinarySearchTree<E> {
   }
 
   public Tree insertNode(Tree tree, E value) {
-    if (isLessThan(value, tree.value)) {
+    if (isValueLessThanTreeValue(tree.value, value)) {
       if (null == tree.left) {
         Tree temp = new Tree();
         temp.value = value;
@@ -58,7 +58,7 @@ public class BinarySearchTree<E> {
     } else if (equals(value, tree.value)) {
       return true;
     } else {
-      if (isLessThan(value, tree.value)) {
+      if (isValueLessThanTreeValue(tree.value, value)) {
         return contains(tree.left, value);
       } else {
         return contains(tree.right, value);
@@ -113,7 +113,7 @@ public class BinarySearchTree<E> {
   4. f( max(node) of left sub tree in temp - 6 / 10
   5. Replace node to be deleted with max(node) of left sub tree - 6 / 10
    */
-  private Tree delete(Tree root, E value) {
+  public Tree delete(Tree root, E value) {
     Tree nodeToDelete = findNode(root, value);
     if (nodeToDelete == null) return root;
 
@@ -124,19 +124,19 @@ public class BinarySearchTree<E> {
     }
 
     if (nodeToDelete.left == null && nodeToDelete.right == null) {//case 1
-      if (isLessThan(nodeToDelete.value, parent.value)) {
+      if (isValueLessThanTreeValue(parent.value, nodeToDelete.value)) {
         parent.left = null;
       } else {
         parent.right = null;
       }
     } else if (nodeToDelete.right == null) {//case 2
-      if (isLessThan(nodeToDelete.value, parent.value)) {
+      if (isValueLessThanTreeValue(parent.value, nodeToDelete.value)) {
         parent.left = nodeToDelete.left;
       } else {
         parent.right = nodeToDelete.left;
       }
     } else if (nodeToDelete.left == null) {//case 3
-      if (isLessThan(nodeToDelete.value, parent.value)) {
+      if (isValueLessThanTreeValue(parent.value, nodeToDelete.value)) {
         parent.left = nodeToDelete.right;
       } else {
         parent.right = nodeToDelete.right;
@@ -145,14 +145,14 @@ public class BinarySearchTree<E> {
       //Any one logic can be used either maxValueOfLeftSubTree or minValueOfRightSubTree
 
       //maxValueOfLeftSubTree
-      //Tree maxValue = maxValueOfLeftSubTree(nodeToDelete);
-      //nodeToDelete.value = maxValue.value;
-      //nodeToDelete.left = delete(nodeToDelete.left, maxValue.value);
+      Tree maxValue = maxValueOfLeftSubTree(nodeToDelete);
+      nodeToDelete.value = maxValue.value;
+      nodeToDelete.left = delete(nodeToDelete.left, maxValue.value);
 
       //minValueOfRightSubTree
-      Tree minValue = minValueOfRightSubTree(nodeToDelete);
-      nodeToDelete.value = minValue.value;
-      nodeToDelete.right = delete(nodeToDelete.right, minValue.value);
+      //Tree minValue = minValueOfRightSubTree(nodeToDelete);
+      //nodeToDelete.value = minValue.value;
+      //nodeToDelete.right = delete(nodeToDelete.right, minValue.value);
     }
 
     return root;
@@ -162,13 +162,13 @@ public class BinarySearchTree<E> {
     delete(mTree, value);
   }
 
-  private Tree findNode(Tree root, E value) {
+  protected Tree findNode(Tree root, E value) {
     if (root == null) {
       return null;
     } else if (equals(value, root.value)) {
       return root;
     } else {
-      if (isLessThan(value, root.value)) {
+      if (isValueLessThanTreeValue(root.value, value)) {
         return findNode(root.left, value);
       } else {
         return findNode(root.right, value);
@@ -176,12 +176,12 @@ public class BinarySearchTree<E> {
     }
   }
 
-  private Tree findParentNode(Tree root, Tree value) {//23,1 (7,1)
+  protected Tree findParentNode(Tree root, Tree value) {//23,1 (7,1)
     if (root == null) {
       return null;
     } else if (equals(value.value, root.value)) {
       return null;
-    } else if (isLessThan(value.value, root.value)) {
+    } else if (isValueLessThanTreeValue(root.value, value.value)) {
       if (root.left.value == value.value) {
         return root;
       } else {
@@ -196,7 +196,7 @@ public class BinarySearchTree<E> {
     }
   }
 
-  private Tree maxValueOfLeftSubTree(Tree value) {//23,1 (7,1)
+  protected Tree maxValueOfLeftSubTree(Tree value) {//23,1 (7,1)
     value = value.left;
     while (value.right != null) {
       value = value.right;
@@ -205,7 +205,7 @@ public class BinarySearchTree<E> {
     return value;
   }
 
-  private Tree minValueOfRightSubTree(Tree value) {//23,1 (7,1)
+  protected Tree minValueOfRightSubTree(Tree value) {//23,1 (7,1)
     value = value.right;
     while (value.left != null) {
       value = value.left;
@@ -237,9 +237,9 @@ public class BinarySearchTree<E> {
     }
   }
 
-  protected boolean isLessThan(E valueOne, E valueTwo) {
-    if (valueOne instanceof Integer) {
-      return (Integer) valueOne < (Integer) valueTwo;
+  protected boolean isValueLessThanTreeValue(E treeValue, E valueToInsert) {
+    if (treeValue instanceof Integer) {
+      return (Integer) valueToInsert < (Integer) treeValue;
     }
 
     throw new NoSuchElementException();
