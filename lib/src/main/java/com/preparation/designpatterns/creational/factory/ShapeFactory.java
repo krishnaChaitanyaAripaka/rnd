@@ -1,6 +1,9 @@
 package com.preparation.designpatterns.creational.factory;
 
+import com.preparation.designpatterns.creational.factory.impl.NoShape;
 import com.preparation.designpatterns.creational.factory.impl.Rectangle;
+import com.preparation.designpatterns.creational.factory.impl.Square;
+import com.preparation.designpatterns.creational.factory.interfaces.Shape;
 
 /**
  * Created by chaitanya.ak on 02/12/15.
@@ -13,22 +16,22 @@ public class ShapeFactory {
   public enum ShapeAction{
     RECTANGLE,
     SQUARE,
+    NONE
   }
 
   public static ShapeFactory getInstance(){
     return new ShapeFactory();
   }
 
-  public com.preparation.designpatterns.creational.factory.interfaces.Shape getShape(ShapeAction shapeAction) {
+  public Shape getShape(ShapeAction shapeAction) {
     switch (shapeAction) {
       case RECTANGLE:
         return new Rectangle();
 
       case SQUARE:
-        return new com.preparation.designpatterns.creational.factory.impl.Square();
-
+        return new Square();
     }
 
-    return null;
+    return new NoShape();
   }
 }
