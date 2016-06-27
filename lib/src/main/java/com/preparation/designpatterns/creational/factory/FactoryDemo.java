@@ -6,11 +6,12 @@ package com.preparation.designpatterns.creational.factory;
 public class FactoryDemo {
 
   public static void main(String a[]) {
-    System.out.print("FactoryDemo");
+    System.out.println("FactoryDemo");
 
     ShapeFactory shapeFactory = ShapeFactory.getInstance();
     shapeFactory.getShape(ShapeFactory.ShapeAction.RECTANGLE).draw();
     shapeFactory.getShape(ShapeFactory.ShapeAction.SQUARE).draw();
+    shapeFactory.getShape(ShapeFactory.ShapeAction.NONE).draw();
   }
 
 }
