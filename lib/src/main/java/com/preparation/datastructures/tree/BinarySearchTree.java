@@ -1,5 +1,6 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.tree;
 
+import com.preparation.datastructures.queue.Queue;
 import java.util.NoSuchElementException;
 
 /**

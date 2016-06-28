@@ -1,4 +1,4 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.queue;
 
 /**
  * Created by chaitanya.ak on 11/06/16.
@@ -6,10 +6,6 @@ package com.preparation.datastructures;
 public class Queue<E> {
   private Node mHead;
   private Node mTail;
-
-  Queue() {
-
-  }
 
   public class Node {
     private E n;

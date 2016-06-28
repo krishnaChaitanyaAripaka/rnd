@@ -1,4 +1,4 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.dll;
 
 /**
  * Created by chaitanya.ak on 11/06/16.

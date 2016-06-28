@@ -1,4 +1,4 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.set;
 
 import java.util.HashMap;
 import java.util.Set;

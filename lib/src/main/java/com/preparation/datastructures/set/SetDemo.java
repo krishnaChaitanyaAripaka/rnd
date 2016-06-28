@@ -1,4 +1,4 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.set;
 
 /**
  * Created by chaitanya.ak on 10/06/16.

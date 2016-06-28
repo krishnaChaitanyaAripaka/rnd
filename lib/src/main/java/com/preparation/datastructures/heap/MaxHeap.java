@@ -1,4 +1,4 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.heap;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;

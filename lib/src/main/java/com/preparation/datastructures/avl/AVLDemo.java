@@ -1,4 +1,4 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.avl;
 
 /**
  * Created by chaitanya.ak on 14/06/16.

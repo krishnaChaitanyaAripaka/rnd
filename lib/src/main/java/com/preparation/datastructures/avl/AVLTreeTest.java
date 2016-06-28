@@ -1,4 +1,4 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.avl;
 
 import java.util.Scanner;
 

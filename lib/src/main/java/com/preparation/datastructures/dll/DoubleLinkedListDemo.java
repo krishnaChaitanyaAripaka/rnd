@@ -1,4 +1,4 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.dll;
 
 /**
  * Describes data transactions in a Double linked list
