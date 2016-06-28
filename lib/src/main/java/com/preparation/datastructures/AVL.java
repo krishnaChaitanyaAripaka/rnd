@@ -6,7 +6,7 @@ package com.preparation.datastructures;
 public class AVL<E> extends BinarySearchTree<E> {
 
   @Override public Tree insertNode(Tree tree, E value) {
-    if (isLessThan(value, tree.value)) {
+    if (isValueLessThanTreeValue(tree.value, value)) {
       if (null == tree.left) {
         Tree temp = new Tree();
         temp.value = value;
@@ -27,6 +27,57 @@ public class AVL<E> extends BinarySearchTree<E> {
     }
 
     return tree;
+  }
+
+  @Override
+  public Tree delete(Tree root, E value) {
+    Tree nodeToDelete = findNode(root, value);
+    if (nodeToDelete == null) return root;
+
+    Tree parent = findParentNode(root, nodeToDelete);
+    if (parent == null && nodeToDelete.left == null && nodeToDelete.right == null) {
+      root = null;
+      return root;
+    }
+
+    if (nodeToDelete.left == null && nodeToDelete.right == null) {//case 1
+      Tree grandParent = findParentNode(mTree, parent);
+      if (isValueLessThanTreeValue(parent.value, nodeToDelete.value)) {
+        parent.left = null;
+        grandParent.left = checkTreeBalance(parent);
+      } else {
+        parent.right = null;
+        grandParent.right = checkTreeBalance(parent);
+      }
+
+    } else if (nodeToDelete.right == null) {//case 2
+      if (isValueLessThanTreeValue(parent.value, nodeToDelete.value)) {
+        parent.left = nodeToDelete.left;
+      } else {
+        parent.right = nodeToDelete.left;
+      }
+    } else if (nodeToDelete.left == null) {//case 3
+      if (isValueLessThanTreeValue(parent.value, nodeToDelete.value)) {
+        parent.left = nodeToDelete.right;
+      } else {
+        parent.right = nodeToDelete.right;
+      }
+    } else {//case 4
+      //Any one logic can be used either maxValueOfLeftSubTree or minValueOfRightSubTree
+
+      //maxValueOfLeftSubTree
+      Tree maxValue = maxValueOfLeftSubTree(nodeToDelete);
+      nodeToDelete.value = maxValue.value;
+      nodeToDelete.left = delete(nodeToDelete.left, maxValue.value);
+      parent.left = checkTreeBalance(nodeToDelete);
+
+      //minValueOfRightSubTree
+      //Tree minValue = minValueOfRightSubTree(nodeToDelete);
+      //nodeToDelete.value = minValue.value;
+      //nodeToDelete.right = delete(nodeToDelete.right, minValue.value);
+    }
+
+    return root;
   }
 
   public Tree rotationWithLeftChild(Tree tree) {
