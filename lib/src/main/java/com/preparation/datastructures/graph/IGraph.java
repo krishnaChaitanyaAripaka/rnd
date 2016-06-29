@@ -1,4 +1,4 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.graph;
 
 import java.util.List;
 

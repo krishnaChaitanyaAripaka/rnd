@@ -1,4 +1,6 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.tree;
+
+import com.preparation.datastructures.tree.BinarySearchTree;
 
 /**
  * Describes a mTree which is nothing but collection of nodes having a parent-child relation

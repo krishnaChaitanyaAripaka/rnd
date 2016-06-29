@@ -1,4 +1,4 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.graph;
 
 /**
  * Created by m.susmitha on 6/24/16.

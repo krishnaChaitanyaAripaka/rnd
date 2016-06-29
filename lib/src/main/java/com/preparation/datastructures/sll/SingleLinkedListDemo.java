@@ -1,4 +1,4 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.sll;
 
 /**
  * Describes data transactions in a singly linked list

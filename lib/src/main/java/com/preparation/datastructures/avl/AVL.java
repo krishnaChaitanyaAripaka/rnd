@@ -1,4 +1,6 @@
-package com.preparation.datastructures;
+package com.preparation.datastructures.avl;
+
+import com.preparation.datastructures.tree.BinarySearchTree;
 
 /**
  * Created by chaitanya.ak on 14/06/16.
