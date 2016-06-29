@@ -7,14 +7,18 @@ import java.util.List;
  */
 public interface IGraph<E> {
 
-	void addEdge(int src, int dest);
+	String IN_EDGES = "IN EDGES";
 
-	void removeEdge(int src, int dest);
+	String OUT_EDGES = "OUT EDGES";
 
-	boolean hasEdge(int src, int dest);
+	void addEdge(E src, E dest);
 
-	List<E> inEdges(int src);
+	void removeEdge(E src, E dest);
 
-	List<E> outEdges(int src);
+	boolean hasEdge(E src, E dest);
+
+	List<E> inEdges(E src);
+
+	List<E> outEdges(E src);
 
 }

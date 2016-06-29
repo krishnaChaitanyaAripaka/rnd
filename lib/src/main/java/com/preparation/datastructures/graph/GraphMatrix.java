@@ -6,18 +6,21 @@ import java.util.List;
 /**
  * Created by m.susmitha on 6/24/16.
  */
-public class GraphMatrix<E> implements IGraph {
+public class GraphMatrix {
+	String IN_EDGES = "IN EDGES";
+	String OUT_EDGES = "OUT EDGES";
 	int[][] graphMatrix;
 
 	GraphMatrix(int n) {
 		graphMatrix = new int[n][n];
+		System.out.println("Size of Adjacency matrix : " + n);
 	}
 
 	boolean isValid(int index) {
 		return index < graphMatrix.length;
 	}
 
-	@Override
+
 	public void addEdge(int src, int dest) {
 		if (isValid(src) && isValid(dest)) {
 			graphMatrix[src][dest] = 1;
@@ -26,17 +29,15 @@ public class GraphMatrix<E> implements IGraph {
 		}
 	}
 
-	@Override
+
 	public void removeEdge(int src, int dest) {
 		graphMatrix[src][dest] = 0;
 	}
 
-	@Override
 	public boolean hasEdge(int src, int dest) {
 		return graphMatrix[src][dest] == 1;
 	}
 
-	@Override
 	public List inEdges(int src) {
 		List<Integer> inEdges = new ArrayList<>();
 		for (int i = 0; i < graphMatrix.length; i++) {
@@ -44,21 +45,11 @@ public class GraphMatrix<E> implements IGraph {
 				inEdges.add(i);
 			}
 		}
-		System.out.println(src + " in edges");
 
-		if (inEdges.size() > 0) {
-			for (int i : inEdges) {
-				System.out.print(i + ", ");
-			}
-		} else {
-			System.out.println("No in edges");
-		}
-		System.out.println("\n------------------\n");
-
+		print(IN_EDGES, src, inEdges);
 		return inEdges;
 	}
 
-	@Override
 	public List outEdges(int src) {
 		List<Integer> outEdges = new ArrayList<>();
 		for (int i = 0; i < graphMatrix.length; i++) {
@@ -66,21 +57,15 @@ public class GraphMatrix<E> implements IGraph {
 				outEdges.add(i);
 			}
 		}
-		System.out.println(src + " out edges");
 
-		if (outEdges.size() > 0) {
-			for (int i : outEdges) {
-				System.out.print(i + ", ");
-			}
-		} else {
-			System.out.println("No out edges");
-		}
-		System.out.println("\n ------------------\n");
+		print(OUT_EDGES, src, outEdges);
 
 		return outEdges;
 	}
 
-
+	private void print(String tag, int src, List list) {
+		System.out.println(tag + " for " + src + " : " + list);
+	}
 
 
 }
