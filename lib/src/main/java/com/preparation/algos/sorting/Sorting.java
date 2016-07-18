@@ -135,7 +135,6 @@ public class Sorting {
     System.out.println();
   }
 
-
   //*54, 26, 93,    *17, 77, 31,    *44, 55, 20,    *10, 11, 99,    *28, 32, 30 -> 10, 17, 28, 44, 54
   //54, *26, 93,    17, *77, 31,    44, *55, 20,    10, *11, 99,    28, *32, 30 -> 11, 26, 32, 55, 77
   //54, 26, *93,   17, 77, *31,    44, 55, *20,    10, 11, *99,     28, 32, *30 -> 20, 30, 31, 93, 99
@@ -149,7 +148,6 @@ public class Sorting {
   //54, 26, *93, 17,    77, 31, *44, 55,     20, 10, *11, 99,    28, 32, *30, 24 -> 11, 30, 44, 93
   //54, 26, 93, *17,   77, 31, 44, *55,     20, 10, 11, *99,    28, 32, 30, *24-> 17, 24, 55, 99
   public static int[] shellSort(int[] array) {
-
 
     int increment = (int) Math.sqrt(array.length); //3
     int subListNo = 0;
@@ -171,5 +169,117 @@ public class Sorting {
     print(array, array.length);
 
     return insertionSort(array);
+  }
+
+  public static int[] mergeSort(int[] array) {
+
+    int lengthArray = array.length;
+    int divRule = lengthArray / 2;
+
+    array = pythonSplit(getSubArray(array, 0, divRule), getSubArray(array, divRule, lengthArray));
+
+    return array;
+  }
+
+  private static int[] pythonSplit(int[] leftArray, int[] rightArray) {
+
+    int leftArrayLength = leftArray.length;
+    int divLeftRule = leftArrayLength / 2;
+
+    int rightArrayLength = rightArray.length;
+    int divRightRule = rightArrayLength / 2;
+
+    if (leftArray.length > 1) {
+      leftArray = pythonSplit(getSubArray(leftArray, 0, divLeftRule),
+          getSubArray(leftArray, divLeftRule, leftArrayLength));
+    }
+
+    if (rightArray.length > 1) {
+      rightArray = pythonSplit(getSubArray(rightArray, 0, divRightRule),
+          getSubArray(rightArray, divRightRule, rightArrayLength));
+    }
+
+    return mergeSplitItems(leftArray, rightArray);
+  }
+
+  private static int[] mergeSplitItems(int[] leftArray, int[] rightArray) {
+
+    int merge[] = new int[leftArray.length + rightArray.length];
+    int i = 0, j = 0, k = 0;
+
+    while ((i + j) < (leftArray.length + rightArray.length)) {
+      if (leftArray[i] <= rightArray[j]) {
+        merge[k++] = leftArray[i++];
+        if (i == leftArray.length) {
+          merge[k++] = rightArray[j++];
+        }
+      } else {
+        merge[k++] = rightArray[j++];
+        if (j == rightArray.length) {
+          merge[k++] = leftArray[i++];
+        }
+      }
+    }
+
+    return merge;
+  }
+
+  private static int[] getSubArray(int[] array, int start, int end) {
+    int subArrayLength = end - start;
+    int[] subArray = new int[subArrayLength];
+
+    for (int i = 0; start < end; ) {
+      subArray[i++] = array[start++];
+    }
+
+    return subArray;
+  }
+
+  public static int[] quickSort(int[] array) {
+
+    if (array.length <= 1) return array;
+
+    return quickSortLooper(array, 0, array.length - 1);
+  }
+
+  public static int[] quickSortLooper(int[] array, int startPoint, int endPoint) {
+
+    if (startPoint >= endPoint) return array;
+
+    int splitPointIndex = splitPoint(array, startPoint, endPoint);
+
+    quickSortLooper(array, startPoint, splitPointIndex - 1);
+
+    quickSortLooper(array, splitPointIndex + 1, endPoint);
+
+    return array;
+  }
+
+  private static int splitPoint(int[] array, int startPoint, int endPoint) {
+    int pivotIndex = startPoint;
+    int leftMark = startPoint + 1;
+    int rightMark = endPoint;
+
+    while (leftMark < rightMark) {
+
+      while (array[pivotIndex] > array[leftMark]) {
+        leftMark++;
+      }
+
+      while (array[pivotIndex] < array[rightMark]) {
+        rightMark--;
+      }
+
+      if (leftMark < rightMark) swap(array, leftMark, rightMark);
+    }
+
+    swap(array, pivotIndex, rightMark);
+    return rightMark;
+  }
+
+  private static void swap(int array[], int positionOne, int positionTwo) {
+    int temp = array[positionOne];
+    array[positionOne] = array[positionTwo];
+    array[positionTwo] = temp;
   }
 }
