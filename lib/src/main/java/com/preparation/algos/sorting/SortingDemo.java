@@ -6,15 +6,17 @@ package com.preparation.algos.sorting;
 public class SortingDemo {
   public static void main(String[] args) {
 
-    int[] array = new int[] { 54, 26, 93, 17, 77, 31, 44, 55, 20, 10, 11, 99, 28, 32, 30, 24 };
+    int[] array = new int[] { 54, 26, 93, 17, 77, 31, 44, 55, 20 };
 
     //array = Sorting.bubbleSort(array);
     //array = Sorting.selectionSort(array);
     //array = Sorting.insertionSort(array);
-    array = Sorting.shellSort(array);
+    //array = Sorting.shellSort(array);
+    //array = Sorting.mergeSort(array);
+    array = Sorting.quickSort(array);
 
-    //for (int i = 0; i < array.length; i++) {
-    //  System.out.println(array[i]);
-    //}
+    for (int i = 0; i < array.length; i++) {
+      System.out.print(array[i] + ", ");
+    }
   }
 }
