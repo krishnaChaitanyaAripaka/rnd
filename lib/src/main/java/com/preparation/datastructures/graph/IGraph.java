@@ -11,14 +11,14 @@ public interface IGraph<E> {
 
 	String OUT_EDGES = "OUT EDGES";
 
-	void addEdge(E src, E dest);
+	void addEdge(E src, E dest, int weight);
 
 	void removeEdge(E src, E dest);
 
-	boolean hasEdge(E src, E dest);
+	boolean hasEdge(E src, E dest, int weight);
 
-	List<E> inEdges(E src);
+	List inEdges(E src);
 
-	List<E> outEdges(E src);
+	List outEdges(E src);
 
 }
