@@ -49,7 +49,7 @@ public class MinHeap<E> {
 	/**
 	 *
 	 */
-	private void traverse() {
+	public void traverse() {
 		for (E value : mList) {
 			System.out.println(value);
 		}

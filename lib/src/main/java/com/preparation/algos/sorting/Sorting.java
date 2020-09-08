@@ -12,19 +12,41 @@ public class Sorting {
    *
    * @return sorted array
    */
-  public static int[] bubbleSort(int[] array) {
 
-    for (int i = 0; i < array.length; i++) {
-      for (int j = 1; j < array.length - i; j++) {
-        if (array[j - 1] > array[j]) {
-          int temp = array[j - 1];
-          array[j - 1] = array[j];
-          array[j] = temp;
+  //5, 1, 4, 2, 8
+  public static void bubbleSort(int[] array) {
+
+    boolean isChanged = true;
+    boolean isSorted = false;
+    for (int i = 0; i < array.length - 1; i++) {
+      for (int j = 0; j < array.length - 1; j++) {
+        if (array[j] > array[j + 1]) {
+          int temp = array[j];
+          array[j] = array[j + 1];
+          array[j + 1] = temp;
+          isChanged = true;
+        }
+
+        if (!isSorted) {
+          System.out.print(array[j] + " ");
         }
       }
+
+      if (!isSorted) {
+        System.out.print(array[array.length - 1] + " ");
+        System.out.print("\n");
+      }
+
+      if (!isChanged) {
+        isSorted = true;
+      } else {
+        isSorted = false;
+      }
+
+      isChanged = false;
     }
 
-    return array;
+//    return array;
   }
 
   /**
@@ -149,24 +171,26 @@ public class Sorting {
   //54, 26, 93, *17,   77, 31, 44, *55,     20, 10, 11, *99,    28, 32, 30, *24-> 17, 24, 55, 99
   public static int[] shellSort(int[] array) {
 
-    int increment = (int) Math.sqrt(array.length); //3
-    int subListNo = 0;
+    int increment = (int) Math.sqrt(array.length);
+    int countMain = 0;
+    int countSub = 0;
+    for (int i = 0; i < array.length - increment; i++) {
+      countMain++;
+      for (int j = i + increment; j < array.length; j += increment) {
+        countSub++;
 
-    while (subListNo < increment) { // 0 < 3
-      for (int i = 0; i < array.length; i++) {
-        for (int j = i + increment; j < array.length; j += increment) {
-          if (array[i] > array[j]) {
-            int temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-          }
+        if (array[i] > array[j]) {
+          int temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
         }
       }
-
-      subListNo++;
     }
 
     print(array, array.length);
+
+    System.out.println("countMain : " + countMain);
+    System.out.println("countSub : " + countSub);
 
     return insertionSort(array);
   }
@@ -211,12 +235,16 @@ public class Sorting {
       if (leftArray[i] <= rightArray[j]) {
         merge[k++] = leftArray[i++];
         if (i == leftArray.length) {
-          merge[k++] = rightArray[j++];
+          while (j < rightArray.length) {
+            merge[k++] = rightArray[j++];
+          }
         }
       } else {
         merge[k++] = rightArray[j++];
         if (j == rightArray.length) {
-          merge[k++] = leftArray[i++];
+          while (i < leftArray.length) {
+            merge[k++] = leftArray[i++];
+          }
         }
       }
     }
@@ -237,14 +265,18 @@ public class Sorting {
 
   public static int[] quickSort(int[] array) {
 
-    if (array.length <= 1) return array;
+    if (array.length <= 1) {
+      return array;
+    }
 
     return quickSortLooper(array, 0, array.length - 1);
   }
 
   public static int[] quickSortLooper(int[] array, int startPoint, int endPoint) {
 
-    if (startPoint >= endPoint) return array;
+    if (startPoint >= endPoint) {
+      return array;
+    }
 
     int splitPointIndex = splitPoint(array, startPoint, endPoint);
 
@@ -270,7 +302,9 @@ public class Sorting {
         rightMark--;
       }
 
-      if (leftMark < rightMark) swap(array, leftMark, rightMark);
+      if (leftMark < rightMark) {
+        swap(array, leftMark, rightMark);
+      }
     }
 
     swap(array, pivotIndex, rightMark);
@@ -281,5 +315,25 @@ public class Sorting {
     int temp = array[positionOne];
     array[positionOne] = array[positionTwo];
     array[positionTwo] = temp;
+  }
+
+  public static int[] heapSort(int[] array) {
+
+    maxHeapify(array);
+
+    return array;
+  }
+
+  private static void maxHeapify(int[] array) {
+    for (int i = 1; i < array.length; i++) {
+      int child = i;
+      int parent = (i - 1) / 2;
+
+      if (array[child] > array[parent]) {
+        int temp = array[child];
+        array[child] = array[parent];
+        array[parent] = temp;
+      }
+    }
   }
 }

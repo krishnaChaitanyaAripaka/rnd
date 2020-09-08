@@ -5,5 +5,7 @@ package com.preparation.designpatterns.creational.abstractfactory.interfaces;
  */
 public interface Color {
 	void fill();
+
+
 }
 

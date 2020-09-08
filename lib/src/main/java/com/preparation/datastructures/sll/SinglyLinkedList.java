@@ -4,6 +4,7 @@ package com.preparation.datastructures.sll;
  * Created by chaitanya.ak on 11/06/16.
  */
 public class SinglyLinkedList<E> {
+
   private Node mHead;
   private Node mTail;
 
@@ -12,6 +13,7 @@ public class SinglyLinkedList<E> {
   }
 
   public class Node {
+
     private E n;
     private Node next;
     private int priority;
@@ -155,7 +157,9 @@ public class SinglyLinkedList<E> {
           lastNodeToPrint = currentNode;
           System.out.print(lastNodeToPrint.n + ",");
 
-          if (mHead == lastNodeToPrint) break;
+          if (mHead == lastNodeToPrint) {
+            break;
+          }
           isLastElement = true;
         } else {
           isLastElement = false;
@@ -174,7 +178,9 @@ public class SinglyLinkedList<E> {
 
   //22 -> 9 -> 11 -> 1
   public void reverseTraversalWithTwoWhileLoops(Node head, Node tail) {
-    if (head == null) return;
+    if (head == null) {
+      return;
+    }
 
     Node current = tail;
     Node previous;
@@ -202,9 +208,9 @@ public class SinglyLinkedList<E> {
     System.out.println(head.n + ",");
   }
 
-  public Node reverseList(Node head) {
+  public Node reverseList() {
     Node rev = null;
-    Node current = head;
+    Node current = mHead;
     while (current != null) {
       Node next = current.next;
       current.next = rev;
@@ -212,5 +218,85 @@ public class SinglyLinkedList<E> {
       current = next;
     }
     return rev;
+  }
+
+
+  public Node reverseList(int k) {
+    if (k <= 1) {
+      return mHead;
+    }
+    mHead = reverseList(mHead, k);
+    return mHead;
+  }
+
+  private Node reverseList(Node node, int k) {
+    int count = 0;
+    Node current = node;
+    Node prev = null;
+    Node next = null;
+    Node currentHead = node;
+    while (count < k && current != null) {
+      next = current.next;
+      current.next = prev;
+      prev = current;
+      current = next;
+      count++;
+    }
+
+    if (next != null) {
+      current = reverseList(next, k);
+    }
+
+    if (current != null) {
+      currentHead.next = current;
+    }
+    return prev;
+  }
+
+  public Node reverseListSkip(int k) {
+    if (k <= 1) {
+      return mHead;
+    }
+    mHead = reverseListSkip(mHead, k, true);
+    return mHead;
+  }
+
+  private Node reverseListSkip(Node node, int k, boolean reverse) {
+    int count = 0;
+    Node current = node;
+    Node prev = null;
+    Node next = null;
+    Node currentHead = node;
+    while (count < k && current != null) {
+      if (reverse) {
+        next = current.next;
+        current.next = prev;
+        prev = current;
+        current = next;
+      } else {
+        if (count == 0) {
+          prev = current;
+        }
+
+        if (count == k - 1) {
+          currentHead = current;
+          current = current.next;
+          currentHead.next = null;
+          next = current;
+        } else {
+          current = current.next;
+        }
+      }
+      count++;
+    }
+
+    if (next != null) {
+      current = reverseListSkip(next, k, !reverse);
+    }
+
+    if (current != null) {
+      currentHead.next = current;
+    }
+    return prev;
   }
 }

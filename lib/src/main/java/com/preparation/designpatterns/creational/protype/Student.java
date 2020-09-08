@@ -5,6 +5,17 @@ package com.preparation.designpatterns.creational.protype;
  */
 class Student implements Cloneable {
   //Contained object
+
+  public int getA() {
+    return a;
+  }
+
+  public void setA(int a) {
+    this.a = a;
+  }
+
+  private int a;
+
   private Subject subj;
 
   private String name;
@@ -27,8 +38,17 @@ class Student implements Cloneable {
   }
 
   public Object clone() throws CloneNotSupportedException {
-    //shallow copy
+    //deep copy
+    Student student = (Student) super.clone();
+    student.subj = (Subject) subj.clone();
+
     System.out.println("Student Clone");
-    return super.clone();
+    return student;
   }
+
+//  public Object clone() throws CloneNotSupportedException {
+//    //shallow copy
+//    System.out.println("Student Clone");
+//    return super.clone();
+//  }
 }

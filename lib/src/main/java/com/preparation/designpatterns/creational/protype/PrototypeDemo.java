@@ -12,7 +12,7 @@ public class PrototypeDemo {
   static {
     original = new HashMap<>();
     Data
-        data = new Data(1, "Krishna", "Ola");
+        data = new Data(1, "Yeah", "Ola");
     original.put(10, data);
 
     //data = new Data();
@@ -26,16 +26,19 @@ public class PrototypeDemo {
 
     System.out.println("========   HashMap Clone   ==========");
     cloned = (HashMap<Integer, Data>) original.clone();
-    //cloned.get(10).setName("Krishna");
-    //
-    //System.out.println(original.hashCode());
-    //System.out.println(cloned.hashCode());
-    //
-    //System.out.println(original.get(10).hashCode());
-    //System.out.println(cloned.get(10).hashCode());
-    //
-    //System.out.println(original.get(10).getName().hashCode());
-    //System.out.println(cloned.get(10).getName().hashCode());
+    System.out.println("Original Name hc : " + original.get(10).getName().hashCode());
+    System.out.println("Cloned Name hc : " + cloned.get(10).getName().hashCode());
+
+    System.out.println("Original Name : " + original.get(10).getName());
+    System.out.println("Cloned Name : " + cloned.get(10).getName());
+
+    cloned.get(10).setName("Krishna");
+
+    System.out.println("Original Name : " + original.get(10).getName());
+    System.out.println("Cloned Name : " + cloned.get(10).getName());
+
+    System.out.println("Original Name hc : " + original.get(10).getName().hashCode());
+    System.out.println("Cloned Name hc : " + cloned.get(10).getName().hashCode());
 
     System.out.println("========   Data Object Clone   ==========");
     Data originalDataObj = original.get(10); //  krishna
