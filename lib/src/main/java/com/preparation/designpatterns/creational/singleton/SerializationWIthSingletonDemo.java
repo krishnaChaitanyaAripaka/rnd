@@ -26,6 +26,8 @@ public class SerializationWIthSingletonDemo {
     in.close();
 
     System.out.println("instanceOne hashCode=" + instanceOne.hashCode());
+
+
     System.out.println("instanceTwo hashCode=" + instanceTwo.hashCode());
   }
 }

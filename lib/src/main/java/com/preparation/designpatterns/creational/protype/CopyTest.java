@@ -28,6 +28,16 @@ public class CopyTest {
     stud.setName("Dan");
     stud.getSubj().setName("Physics");
 
+
+    System.out.println(stud.getName());
+    System.out.println(clonedStud.getName());
+
+    System.out.println(stud.getSubj().getName());
+    System.out.println(clonedStud.getSubj().getName());
+
+    System.out.println(stud.getName().hashCode());
+    System.out.println(clonedStud.getName().hashCode());
+
     System.out.println(
         "Original Object after it is updated: " + stud.getName() + " - " + stud.getSubj()
             .getName());

@@ -7,7 +7,7 @@ public class DoublyLinkedList<E> {
   private Node mHead;
   private Node mTail;
 
-  DoublyLinkedList() {
+  public DoublyLinkedList() {
 
   }
 

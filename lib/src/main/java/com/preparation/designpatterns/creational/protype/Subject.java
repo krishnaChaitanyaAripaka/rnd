@@ -3,7 +3,7 @@ package com.preparation.designpatterns.creational.protype;
 /**
  * Created by chaitanya.ak on 11/05/16.
  */
-public class Subject {
+public class Subject implements Cloneable{
   private String name;
 
   public String getName() {
@@ -16,5 +16,11 @@ public class Subject {
 
   public Subject(String s) {
     name = s;
+  }
+
+  @Override
+  protected Object clone() throws CloneNotSupportedException {
+    System.out.println("Subject Clone");
+    return super.clone();
   }
 }
